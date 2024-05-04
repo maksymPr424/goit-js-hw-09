@@ -71,22 +71,22 @@ const images = [
 const gallery = document.querySelector('.gallery');
 
 const addImagesToGallery = () => {
-  for (const { preview, original, description } of images) {
-    gallery.insertAdjacentHTML(
-      'beforeend',
-      `
-      <li class="gallery-item">
-      <a class="gallery-link" href=${original}>
-          <img
-            class="gallery-image"
-            src= ${preview}
-            alt=${description}
-          />
-        </a>
-  </li>
-  `
-    );
-  }
+  const addImg = images
+    .map(
+      ({ preview, original, description }) => `
+        <li class="gallery-item">
+        <a class="gallery-link" href="${original}">
+            <img
+              class="gallery-image"
+              src= "${preview}"
+              alt="${description}"
+            />
+          </a>
+    </li>
+    `
+    )
+    .join('');
+  gallery.insertAdjacentHTML('beforeend', addImg);
 };
 
 addImagesToGallery();
@@ -94,10 +94,5 @@ addImagesToGallery();
 const lightbox = new SimpleLightbox('.gallery a', {
   captions: true,
   captionDelay: 250,
-  close: true,
-  nav: true,
-  overlay: true,
-  overlayOpacity: 0.8,
-  captionPosition: 'bottom',
   captionsData: 'alt',
 });
